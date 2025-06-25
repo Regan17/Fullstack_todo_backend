@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Debug: Show first few lines of SSH key (masked)
+      - name: Debug:Show first few lines of SSH key (masked)
         run: |
           echo "Showing first 3 lines of SSH key for debug:"
           echo "${{ secrets.EC2_SSH_KEY }}" | head -n 3
