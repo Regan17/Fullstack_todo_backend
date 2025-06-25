@@ -1,0 +1,34 @@
+name: Deploy Backend to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Copy Files to EC2
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: 50.19.91.207             # Your EC2 IP
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "."
+          target: "/home/ec2-user/backend-app"
+
+      - name: SSH into EC2 and Restart Backend
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: 50.19.91.207
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ec2-user/backend-app
+            npm install
+            pm2 restart backend-app || pm2 start index.js --name backend-app
