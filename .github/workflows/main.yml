@@ -23,9 +23,9 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.7
         with:
-          host: 50.19.91.207
-          username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
+          username: ec2-user
+          host: 50.19.91.207
           script: |
             cd ~/backend-app
             git pull origin main
