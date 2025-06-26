@@ -3,11 +3,12 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 app.use(express.json());
-app.use(cors({
-  origin: 'http://localhost:5173'  // your frontend origin
-}));
+const corsOptions = {
+  origin: 'http://fullstacktodobackend.s3-website-us-east-1.amazonaws.com'
+};
+#hello
+app.use(cors(corsOptions));
 let todos = [];
-
 app.get('/', (req, res) => res.send('🟢 API is running'));
 
 app.get('/todos', (req, res) => res.json(todos));
